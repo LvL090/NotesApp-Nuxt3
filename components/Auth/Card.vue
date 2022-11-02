@@ -1,4 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const authState = ref<"Login" | "Signup">("Login");
+
+const toggleAuthState = () => {
+  if (authState.value === "Login") authState.value = "Signup";
+  else authState.value = "Login";
+};
+</script>
 
 <template>
   <body class="min-h-screen">
@@ -15,18 +22,23 @@
             aria-label="Login to your account"
             class="text-2xl font-extrabold leading-6 text-gray-800"
           >
-            Login to your account
+            {{ authState }}
           </p>
           <p class="text-sm mt-4 font-medium leading-none text-gray-500">
-            Dont have account?
+            {{
+              authState === "Login"
+                ? "Don't have an account?"
+                : "Already have an account? Go ahead and "
+            }}
             <span
+              @click="toggleAuthState"
               tabindex="0"
               role="link"
               aria-label="Sign up here"
               class="text-sm font-medium leading-none underline text-gray-800 cursor-pointer"
             >
-              Sign up here</span
-            >
+              {{ authState === "Login" ? "Sign up here" : "Login here" }}
+            </span>
           </p>
           <div class="mt-5">
             <lable class="text-sm font-medium leading-none text-gray-800">
@@ -68,7 +80,7 @@
             <button
               class="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full"
             >
-              Login
+              Submit
             </button>
           </div>
         </div>
